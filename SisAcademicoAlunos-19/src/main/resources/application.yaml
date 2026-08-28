@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: SisAcademicoAlunos-19
+  datasource:
+    url: jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databaseName=BDMARCIA;encrypt=true;trustServerCertificate=true
+    username: ""
+    password: ""
+    drive-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true

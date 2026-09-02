@@ -2,22 +2,21 @@ package com.example.SisAcademicoAlunos_19.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "usuarios")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Usuario {
-    
+
+    // id sempre
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+
+    // campos de cadastro do usuário
     @Column(unique = true, nullable = false, length = 11)
     @NotBlank(message = "CPF não pode estar em branco")
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
@@ -40,7 +39,9 @@ public class Usuario {
     @NotBlank(message = "Email não pode estar em branco")
     @Email(message = "Email deve ser válido")
     private String email;
-    
+
+
+    // login e senha
     @Column(unique = true, nullable = false, length = 50)
     @NotBlank(message = "Login não pode estar em branco")
     private String login;

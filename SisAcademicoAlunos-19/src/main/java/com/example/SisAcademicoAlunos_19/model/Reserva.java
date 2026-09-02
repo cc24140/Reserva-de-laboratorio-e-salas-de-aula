@@ -2,23 +2,21 @@ package com.example.SisAcademicoAlunos_19.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "reservas")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Reserva {
-    
+
+    // id sempre
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    // campos de cadastro da reserva
     @Column(name = "data_inicio", nullable = false)
     @NotNull(message = "Data inicial é obrigatória")
     private LocalDate dataInicio;
@@ -34,16 +32,18 @@ public class Reserva {
     @Column(name = "hora_fim", nullable = false)
     @NotNull(message = "Hora final é obrigatória")
     private LocalTime horaFim;
-    
+
+    // relacionamento com outras entidades
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     @NotNull(message = "Usuário é obrigatório")
     private Usuario usuario;
-    
+
+    // codigo do recurso (laboratório ou sala) que está sendo reservado
     @ManyToOne
     @JoinColumn(name = "laboratorio_id")
     private Laboratorio laboratorio;
-    
+    // ou
     @ManyToOne
     @JoinColumn(name = "sala_id")
     private Sala sala;

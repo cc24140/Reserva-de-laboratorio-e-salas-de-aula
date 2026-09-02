@@ -3,8 +3,8 @@ spring:
     name: SisAcademicoAlunos-19
   datasource:
     url: jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databaseName=BDMARCIA;encrypt=true;trustServerCertificate=true
-    username: "BDMARCIA"
-    password: ""
+    username: "BD24140"
+    password: "BD24140"
     drive-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     show-sql: true

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class StatusService {
+public class StatusService {    // chama o repository
 
     private final StatusRepository statusRepository;
 

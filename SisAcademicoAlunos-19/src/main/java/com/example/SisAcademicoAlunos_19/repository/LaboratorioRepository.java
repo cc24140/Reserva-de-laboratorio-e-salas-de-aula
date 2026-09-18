@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> {
+public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> {   // comunicação direta com o banco, faz consultas, save, findAll, delete
     Optional<Laboratorio> findByCodigo(String codigo);
     List<Laboratorio> findByNome(String nome);
     List<Laboratorio> findByCapacidade(Integer capacidade);

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SalaRepository extends JpaRepository<Sala, Long> {
+public interface SalaRepository extends JpaRepository<Sala, Long> { // comunicação direta com o banco, faz consultas, save, findAll, delete
     // consulta personalizada para buscar salas por código
     Optional<Sala> findByCodigo(String codigo);
 

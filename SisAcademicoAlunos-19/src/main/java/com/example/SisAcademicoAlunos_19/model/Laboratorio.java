@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "laboratorios")
 @Data
-public class Laboratorio {
+public class Laboratorio {  // representa a tabela do banco
 
     // id sempre
     @Id

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "usuarios")
 @Data
-public class Usuario {
+public class Usuario {  // representa a tabela do banco
 
     // id sempre
     @Id

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StatusRepository extends JpaRepository<Status, Long> {
+public interface StatusRepository extends JpaRepository<Status, Long> { // comunicação direta com o banco, faz consultas, save, findAll, delete
     // consulta personalizada para buscar status por código
     Optional<Status> findByCodigo(String codigo);
 

@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface ReservaRepository extends JpaRepository<Reserva, Long> {
+public interface ReservaRepository extends JpaRepository<Reserva, Long> {   // comunicação direta com o banco, faz consultas, save, findAll, delete
     List<Reserva> findByUsuario_Id(Long usuarioId);
     List<Reserva> findByStatus_Id(Long statusId);
     List<Reserva> findByLaboratorio_Id(Long laboratorioId);

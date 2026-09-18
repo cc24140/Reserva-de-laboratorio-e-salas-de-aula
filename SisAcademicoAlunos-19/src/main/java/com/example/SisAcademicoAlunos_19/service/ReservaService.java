@@ -18,7 +18,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Service
-public class ReservaService {
+public class ReservaService { // chama o repository
 
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;

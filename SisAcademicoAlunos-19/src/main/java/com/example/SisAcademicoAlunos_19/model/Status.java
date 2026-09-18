@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "statuses")
 @Data
-public class Status {
+public class Status {   // representa a tabela do banco
 
     // id sempre
     @Id

@@ -9,7 +9,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "reservas")
 @Data
-public class Reserva {
+public class Reserva {  // representa a tabela do banco
 
     // id sempre
     @Id

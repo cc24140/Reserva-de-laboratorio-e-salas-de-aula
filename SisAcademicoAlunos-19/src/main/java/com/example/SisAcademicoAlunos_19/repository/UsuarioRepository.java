@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {   // comunicação direta com o banco, faz consultas, save, findAll, delete
 
     // consulta personalizada para buscar usuários por login
     Optional<Usuario> findByLogin(String login);

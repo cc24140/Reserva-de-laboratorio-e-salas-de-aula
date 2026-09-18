@@ -1,6 +1,8 @@
 package com.example.SisAcademicoAlunos_19.repository;
 
 import com.example.SisAcademicoAlunos_19.model.Usuario;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // consulta personalizada para buscar usuários por data de aniversario para reservas
     @Query("SELECT u FROM Usuario u WHERE u.dataAniversario = :data")
     List<Usuario> findByDataAniversario(@Param("data") LocalDate data);
+
+    Optional<Usuario> findByCpf(@NotBlank(message = "CPF não pode estar em branco") @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos") String cpf);
 }

@@ -23,7 +23,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("SELECT r FROM Reserva r WHERE ( (r.laboratorio.id = :laboratorioId AND :laboratorioId IS NOT NULL) OR (r.sala.id = :salaId AND :salaId IS NOT NULL) ) " +
            "AND r.dataInicio <= :endDate AND r.dataFim >= :startDate " +
            "AND r.horaInicio < :horaFim AND r.horaFim > :horaInicio")
-    List<Reserva> findOverlappingReservations(@Param("laboratorioId") Long laboratorioId,
+    List<Reserva> buscarReservasConflitantes(@Param("laboratorioId") Long laboratorioId,
                                               @Param("salaId") Long salaId,
                                               @Param("startDate") LocalDate startDate,
                                               @Param("endDate") LocalDate endDate,

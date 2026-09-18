@@ -9,6 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
+    // consulta personalizada para buscar status por código
     Optional<Status> findByCodigo(String codigo);
-    List<Status> findByNomeContainingIgnoreCase(String nome);
+
+    // consulta personalizada para buscar status por nome
+    List<Status> findByNome(String nome);
 }

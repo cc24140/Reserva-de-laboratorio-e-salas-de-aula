@@ -9,8 +9,15 @@ import java.util.Optional;
 
 @Repository
 public interface SalaRepository extends JpaRepository<Sala, Long> {
+    // consulta personalizada para buscar salas por código
     Optional<Sala> findByCodigo(String codigo);
-    List<Sala> findByNomeContainingIgnoreCase(String nome);
+
+    // consulta personalizada para buscar salas por nome
+    List<Sala> findByNome(String nome);
+
+    // consulta personalizada para buscar salas por capacidade
     List<Sala> findByCapacidade(Integer capacidade);
-    List<Sala> findByLocalizacaoContainingIgnoreCase(String localizacao);
+
+    // consulta personalizada para buscar salas por localização
+    List<Sala> findByLocalizacao(String localizacao);
 }

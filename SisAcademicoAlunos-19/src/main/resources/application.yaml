@@ -2,13 +2,19 @@ spring:
   application:
     name: SisAcademicoAlunos-19
   datasource:
-    url: jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databaseName=BDMARCIA;encrypt=true;trustServerCertificate=true
+    url: jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databaseName=BD24140;encrypt=true;trustServerCertificate=true
     username: "BD24140"
     password: "BD24140"
     drive-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  mvc:
+    throw-exception-if-no-handler-found: true
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate.format_sql: true
+
+server:
+  error:
+    include-message: never

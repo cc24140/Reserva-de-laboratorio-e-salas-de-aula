@@ -26,6 +26,7 @@ public class GlobalExceptionHandler
 {
    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+   // serve para capturar exceções de validação de argumentos de método e retornar uma resposta personalizada
    @ExceptionHandler(MethodArgumentNotValidException.class)
    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
    public ErroResposta handleMethodArgumentNotValidException(MethodArgumentNotValidException e)
@@ -38,20 +39,22 @@ public class GlobalExceptionHandler
        return ErroResposta.validacao(listaErros);
    }
 
+   // serve para capturar exceções de recurso não encontrado e retornar uma resposta personalizada
    @ExceptionHandler(NoHandlerFoundException.class)
    @ResponseStatus(HttpStatus.NOT_FOUND)
    public ErroResposta handleNoHandlerFound(NoHandlerFoundException e) {
        return ErroResposta.notFound("Recurso não encontrado");
    }
 
+   // serve para capturar exceções de mensagem HTTP não legível (como JSON malformado) e retornar uma resposta personalizada
    @ExceptionHandler({HttpMessageNotReadableException.class})
    @ResponseStatus(HttpStatus.BAD_REQUEST)
    public ErroResposta handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
-       // Log full error for debugging
        logger.warn("JSON inválido ou malformado: {}", e.getMessage());
        return ErroResposta.badRequest("JSON inválido ou malformado");
    }
 
+   // serve para capturar exceções de tipo de mídia não suportado e retornar uma resposta personalizada
    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
    public ErroResposta handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException e) {
@@ -59,6 +62,7 @@ public class GlobalExceptionHandler
        return ErroResposta.badRequest("Tipo de mídia não suportado");
    }
 
+   // serve para capturar exceções de incompatibilidade de tipo de argumento de método e retornar uma resposta personalizada
    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
    @ResponseStatus(HttpStatus.BAD_REQUEST)
    public ErroResposta handleTypeMismatch(MethodArgumentTypeMismatchException e) {
@@ -66,6 +70,7 @@ public class GlobalExceptionHandler
        return ErroResposta.badRequest(msg);
    }
 
+   // serve para capturar exceções de parâmetros de requisição ausentes e retornar uma resposta personalizada
    @ExceptionHandler(MissingServletRequestParameterException.class)
    @ResponseStatus(HttpStatus.BAD_REQUEST)
    public ErroResposta handleMissingParams(MissingServletRequestParameterException e) {
@@ -73,6 +78,7 @@ public class GlobalExceptionHandler
        return ErroResposta.badRequest(msg);
    }
 
+   // serve para capturar exceções de violação de integridade de dados (como chaves duplicadas) e retornar uma resposta personalizada
    @ExceptionHandler(DataIntegrityViolationException.class)
    @ResponseStatus(HttpStatus.CONFLICT)
    public ErroResposta handleDataIntegrity(DataIntegrityViolationException e) {
@@ -80,17 +86,17 @@ public class GlobalExceptionHandler
        return ErroResposta.conflito("Violação de integridade de dados");
    }
 
+   // serve para capturar exceções de argumento ilegal e retornar uma resposta personalizada
    @ExceptionHandler(IllegalArgumentException.class)
    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
    public ErroResposta handleIllegalArgumentException(IllegalArgumentException e) {
-       // mensagens lançadas manualmente em serviços são apresentadas ao usuário
        return ErroResposta.respostaPadrao(e.getMessage());
    }
 
+   // serve para capturar quaisquer outras exceções não tratadas e retornar uma resposta genérica de erro interno do servidor
    @ExceptionHandler(Exception.class)
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    public ErroResposta handleGenericException(Exception e) {
-       // Log exception details server-side, but return generic message to client
        logger.error("Erro interno no servidor", e);
        return ErroResposta.internal();
    }

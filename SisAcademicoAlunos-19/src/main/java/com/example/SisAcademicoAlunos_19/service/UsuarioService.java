@@ -23,6 +23,7 @@ public class UsuarioService {   // chama o repository
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
+        validarCpf(usuario.getCpf());
         validarDadosDuplicados(usuario);
         usuario.setSenhaHash(passwordEncoder.encode(usuario.getSenhaHash()));
         return usuarioRepository.save(usuario);
@@ -44,6 +45,7 @@ public class UsuarioService {   // chama o repository
             throw new IllegalArgumentException("Login já cadastrado no sistema.");
         }
 
+        validarCpf(usuarioAtualizado.getCpf());
         usuarioAtualizado.setId(id);
 
         if (usuarioAtualizado.getSenhaHash() != null && !usuarioAtualizado.getSenhaHash().isBlank()) {
@@ -109,5 +111,36 @@ public class UsuarioService {   // chama o repository
         if (usuarioRepository.findByLogin(usuario.getLogin()).isPresent()) {
             throw new IllegalArgumentException("Login já cadastrado no sistema.");
         }
+    }
+
+    private void validarCpf(String cpf) {
+        if (cpf == null || cpf.length() != 11 || !cpf.matches("\\d{11}") || !cpfValido(cpf)) {
+            throw new IllegalArgumentException("CPF inválido");
+        }
+    }
+
+    private boolean cpfValido(String cpf) {
+        int[] digits = cpf.chars().map(c -> c - '0').toArray();
+        int soma = 0;
+        int peso = 10;
+        for (int i = 0; i < 9; i++) {
+            soma += digits[i] * peso;
+            peso--;
+        }
+        int digito1 = soma % 11;
+        digito1 = digito1 < 2 ? 0 : 11 - digito1;
+        if (digits[9] != digito1) {
+            return false;
+        }
+
+        soma = 0;
+        peso = 11;
+        for (int i = 0; i < 10; i++) {
+            soma += digits[i] * peso;
+            peso--;
+        }
+        int digito2 = soma % 11;
+        digito2 = digito2 < 2 ? 0 : 11 - digito2;
+        return digits[10] == digito2;
     }
 }

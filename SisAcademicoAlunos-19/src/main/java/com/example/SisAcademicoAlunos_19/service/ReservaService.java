@@ -3,12 +3,12 @@ package com.example.SisAcademicoAlunos_19.service;
 import com.example.SisAcademicoAlunos_19.model.Laboratorio;
 import com.example.SisAcademicoAlunos_19.model.Reserva;
 import com.example.SisAcademicoAlunos_19.model.Sala;
-import com.example.SisAcademicoAlunos_19.model.Status;
+import com.example.SisAcademicoAlunos_19.model.StatusReserva;
 import com.example.SisAcademicoAlunos_19.model.Usuario;
 import com.example.SisAcademicoAlunos_19.repository.LaboratorioRepository;
 import com.example.SisAcademicoAlunos_19.repository.ReservaRepository;
 import com.example.SisAcademicoAlunos_19.repository.SalaRepository;
-import com.example.SisAcademicoAlunos_19.repository.StatusRepository;
+import com.example.SisAcademicoAlunos_19.repository.StatusReservaRepository;
 import com.example.SisAcademicoAlunos_19.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,18 +24,18 @@ public class ReservaService { // chama o repository
     private final UsuarioRepository usuarioRepository;
     private final LaboratorioRepository laboratorioRepository;
     private final SalaRepository salaRepository;
-    private final StatusRepository statusRepository;
+    private final StatusReservaRepository statusReservaRepository;
 
     public ReservaService(ReservaRepository reservaRepository,
                           UsuarioRepository usuarioRepository,
                           LaboratorioRepository laboratorioRepository,
                           SalaRepository salaRepository,
-                          StatusRepository statusRepository) {
+                          StatusReservaRepository statusReservaRepository) {
         this.reservaRepository = reservaRepository;
         this.usuarioRepository = usuarioRepository;
         this.laboratorioRepository = laboratorioRepository;
         this.salaRepository = salaRepository;
-        this.statusRepository = statusRepository;
+        this.statusReservaRepository = statusReservaRepository;
     }
 
     @Transactional
@@ -111,13 +111,13 @@ public class ReservaService { // chama o repository
                 .orElseThrow(() -> new IllegalArgumentException("Usuário informado não existe."));
         reserva.setUsuario(usuario);
 
-        if (reserva.getStatus() == null || reserva.getStatus().getId() == null) {
+        if (reserva.getStatusReserva() == null || reserva.getStatusReserva().getId() == null) {
             throw new IllegalArgumentException("Status da reserva é obrigatório.");
         }
 
-        Status status = statusRepository.findById(reserva.getStatus().getId())
+        StatusReserva statusReserva = statusReservaRepository.findById(reserva.getStatusReserva().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Status informado não existe."));
-        reserva.setStatus(status);
+        reserva.setStatusReserva(statusReserva);
 
         if (reserva.getDataInicio() == null || reserva.getDataFim() == null) {
             throw new IllegalArgumentException("As datas inicial e final são obrigatórias.");

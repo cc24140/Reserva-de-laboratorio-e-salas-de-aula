@@ -1,7 +1,11 @@
 package com.example.SisAcademicoAlunos_19.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
@@ -16,19 +20,26 @@ public class Sala { // representa a tabela do banco
 
     // campos de cadastro da sala
     @Column(unique = true, nullable = false, length = 20)
-    @NotBlank(message = "Código não pode estar em branco")
+    @NotBlank(message = "Campo obrigatório")
     private String codigo;
-    
-    @Column(nullable = false, length = 150)
-    @NotBlank(message = "Nome não pode estar em branco")
+
+    @Column(nullable = false, length = 80)
+    @NotBlank(message = "Campo obrigatório")
+    @Size(min = 10, max = 80, message = "Quantidade de caracteres incorreta!")
     private String nome;
     
     @Column(nullable = false)
-    @NotNull(message = "Capacidade é obrigatória")
-    @Min(value = 1, message = "Capacidade deve ser maior que 0")
+    @NotNull(message = "Campo obrigatório")
+    @Min(value = 1, message = "Valor fora do escopo")
+    @Max(value = 40, message = "Valor fora do escopo")
     private Integer capacidade;
-    
-    @Column(nullable = false, length = 200)
-    @NotBlank(message = "Localização não pode estar em branco")
+
+    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Campo obrigatório")
+    @Size(min = 3, max = 50, message = "Quantidade de caracteres incorreta!")
     private String localizacao;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 }

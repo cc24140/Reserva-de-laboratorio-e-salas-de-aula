@@ -18,7 +18,7 @@ class ReservaRepositoryTest {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private StatusRepository statusRepository;
+    private StatusReservaRepository statusReservaRepository;
 
     @Autowired
     private LaboratorioRepository laboratorioRepository;
@@ -38,10 +38,10 @@ class ReservaRepositoryTest {
         usuario.setSenhaHash("senha123");
         usuario = usuarioRepository.save(usuario);
 
-        Status status = new Status();
-        status.setCodigo("ST_RES_001");
-        status.setNome("Reservado");
-        status = statusRepository.save(status);
+        StatusReserva statusReserva = new StatusReserva();
+        statusReserva.setCodigo("ST_RES_001");
+        statusReserva.setNome("Reservado");
+        statusReserva = statusReservaRepository.save(statusReserva);
 
         Laboratorio laboratorio = new Laboratorio();
         laboratorio.setCodigo("LAB_RES_001");
@@ -57,7 +57,7 @@ class ReservaRepositoryTest {
         reserva.setHoraFim(LocalTime.of(11, 0));
         reserva.setUsuario(usuario);
         reserva.setLaboratorio(laboratorio);
-        reserva.setStatus(status);
+        reserva.setStatusReserva(statusReserva);
 
         Reserva salva = reservaRepository.save(reserva);
         System.out.println("Dados da RESERVA salva: " + salva);
@@ -75,10 +75,10 @@ class ReservaRepositoryTest {
         usuario.setSenhaHash("senha123");
         usuario = usuarioRepository.save(usuario);
 
-        Status status = new Status();
-        status.setCodigo("ST_RES_002");
-        status.setNome("Livre");
-        status = statusRepository.save(status);
+        StatusReserva statusReserva = new StatusReserva();
+        statusReserva.setCodigo("ST_RES_002");
+        statusReserva.setNome("Livre");
+        statusReserva = statusReservaRepository.save(statusReserva);
 
         Sala sala = new Sala();
         sala.setCodigo("SAL_RES_001");
@@ -94,7 +94,7 @@ class ReservaRepositoryTest {
         reserva.setHoraFim(LocalTime.of(16, 0));
         reserva.setUsuario(usuario);
         reserva.setSala(sala);
-        reserva.setStatus(status);
+        reserva.setStatusReserva(statusReserva);
 
         reservaRepository.save(reserva);
         var resultado = reservaRepository.findByUsuario_Id(usuario.getId());

@@ -6,25 +6,26 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record ReservaCadastroDTO(       // é o formato que chega/sai da API, ajuda a não expor campos sensíveis como senha em retorno (se comunica com model)
-        @NotNull(message = "Data inicial é obrigatória")
+        @NotNull(message = "Campo obrigatório")
         LocalDate dataInicio,
 
-        @NotNull(message = "Data final é obrigatória")
+        @NotNull(message = "Campo obrigatório")
         LocalDate dataFim,
 
-        @NotNull(message = "Hora inicial é obrigatória")
+        @NotNull(message = "Campo obrigatório")
         LocalTime horaInicio,
 
-        @NotNull(message = "Hora final é obrigatória")
+        @NotNull(message = "Campo obrigatório")
         LocalTime horaFim,
 
-        @NotNull(message = "Usuário é obrigatório")
+        @NotNull(message = "Campo obrigatório")
         Long usuarioId,
 
         Long laboratorioId,
 
         Long salaId,
 
-        @NotNull(message = "Status é obrigatório")
+        Long statusReservaId,
+
         Long statusId
 ) {}

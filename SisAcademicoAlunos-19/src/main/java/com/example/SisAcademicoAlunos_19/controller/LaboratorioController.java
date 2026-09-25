@@ -2,6 +2,7 @@ package com.example.SisAcademicoAlunos_19.controller;
 
 import com.example.SisAcademicoAlunos_19.controller.dto.LaboratorioDTO;
 import com.example.SisAcademicoAlunos_19.model.Laboratorio;
+import com.example.SisAcademicoAlunos_19.model.Status;
 import com.example.SisAcademicoAlunos_19.service.LaboratorioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,13 @@ public class LaboratorioController {    // recebe requisicoes, expoe endpoints e
     public ResponseEntity<List<LaboratorioDTO>> listar(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer capacidade,
-            @RequestParam(required = false) String localizacao) {
+            @RequestParam(required = false) String localizacao,
+            @RequestParam(required = false) Long statusId) {
 
         List<Laboratorio> lista = laboratorioService.buscarPorFiltros(nome, capacidade, localizacao);
+        if (statusId != null) {
+            lista = lista.stream().filter(l -> l.getStatus() != null && l.getStatus().getId() != null && l.getStatus().getId().equals(statusId)).toList();
+        }
         return ResponseEntity.ok(lista.stream().map(this::mapearParaDTO).toList());
     }
 
@@ -62,16 +67,23 @@ public class LaboratorioController {    // recebe requisicoes, expoe endpoints e
         laboratorio.setNome(dto.nome());
         laboratorio.setCapacidade(dto.capacidade());
         laboratorio.setLocalizacao(dto.localizacao());
+        if (dto.statusId() != null) {
+            Status status = new Status();
+            status.setId(dto.statusId());
+            laboratorio.setStatus(status);
+        }
         return laboratorio;
     }
 
     private LaboratorioDTO mapearParaDTO(Laboratorio laboratorio) {
+        Long statusId = laboratorio.getStatus() != null ? laboratorio.getStatus().getId() : null;
         return new LaboratorioDTO(
                 laboratorio.getId(),
                 laboratorio.getCodigo(),
                 laboratorio.getNome(),
                 laboratorio.getCapacidade(),
-                laboratorio.getLocalizacao()
+                laboratorio.getLocalizacao(),
+                statusId
         );
     }
 }

@@ -3,7 +3,7 @@ package com.example.SisAcademicoAlunos_19.controller.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record StatusDTO(        // é o formato que chega/sai da API, ajuda a não expor campos sensíveis como senha em retorno (se comunica com model)
+public record StatusReservaDTO(
         Long id,
 
         @NotBlank(message = "Campo obrigatório")

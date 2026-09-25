@@ -2,6 +2,7 @@ package com.example.SisAcademicoAlunos_19.controller;
 
 import com.example.SisAcademicoAlunos_19.controller.dto.SalaDTO;
 import com.example.SisAcademicoAlunos_19.model.Sala;
+import com.example.SisAcademicoAlunos_19.model.Status;
 import com.example.SisAcademicoAlunos_19.service.SalaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,13 @@ public class SalaController {   // recebe requisicoes, expoe endpoints e chama o
     public ResponseEntity<List<SalaDTO>> listar(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer capacidade,
-            @RequestParam(required = false) String localizacao) {
+            @RequestParam(required = false) String localizacao,
+            @RequestParam(required = false) Long statusId) {
 
         List<Sala> lista = salaService.buscarPorFiltros(nome, capacidade, localizacao);
+        if (statusId != null) {
+            lista = lista.stream().filter(s -> s.getStatus() != null && s.getStatus().getId() != null && s.getStatus().getId().equals(statusId)).toList();
+        }
         return ResponseEntity.ok(lista.stream().map(this::mapearParaDTO).toList());
     }
 
@@ -62,16 +67,23 @@ public class SalaController {   // recebe requisicoes, expoe endpoints e chama o
         sala.setNome(dto.nome());
         sala.setCapacidade(dto.capacidade());
         sala.setLocalizacao(dto.localizacao());
+        if (dto.statusId() != null) {
+            Status status = new Status();
+            status.setId(dto.statusId());
+            sala.setStatus(status);
+        }
         return sala;
     }
 
     private SalaDTO mapearParaDTO(Sala sala) {
+        Long statusId = sala.getStatus() != null ? sala.getStatus().getId() : null;
         return new SalaDTO(
                 sala.getId(),
                 sala.getCodigo(),
                 sala.getNome(),
                 sala.getCapacidade(),
-                sala.getLocalizacao()
+                sala.getLocalizacao(),
+                statusId
         );
     }
 }

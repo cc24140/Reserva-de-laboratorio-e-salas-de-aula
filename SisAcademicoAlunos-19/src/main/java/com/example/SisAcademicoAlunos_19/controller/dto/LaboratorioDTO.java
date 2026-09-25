@@ -1,22 +1,29 @@
 package com.example.SisAcademicoAlunos_19.controller.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record LaboratorioDTO(   // é o formato que chega/sai da API, ajuda a não expor campos sensíveis como senha em retorno (se comunica com model)
         Long id,
 
-        @NotBlank(message = "Código do laboratório não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
         String codigo,
 
-        @NotBlank(message = "Nome do laboratório não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
+        @Size(min = 10, max = 80, message = "Quantidade de caracteres incorreta!")
         String nome,
 
-        @NotNull(message = "Capacidade é obrigatória")
-        @Min(value = 1, message = "Capacidade deve ser maior que zero")
+        @NotNull(message = "Campo obrigatório")
+        @Min(value = 1, message = "Valor fora do escopo")
+        @Max(value = 40, message = "Valor fora do escopo")
         Integer capacidade,
 
-        @NotBlank(message = "Localização não pode estar em branco")
-        String localizacao
+        @NotBlank(message = "Campo obrigatório")
+        @Size(min = 3, max = 50, message = "Quantidade de caracteres incorreta!")
+        String localizacao,
+
+        Long statusId
 ) {}

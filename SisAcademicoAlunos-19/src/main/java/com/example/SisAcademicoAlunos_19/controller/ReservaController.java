@@ -5,7 +5,7 @@ import com.example.SisAcademicoAlunos_19.controller.dto.ReservaRespostaDTO;
 import com.example.SisAcademicoAlunos_19.model.Laboratorio;
 import com.example.SisAcademicoAlunos_19.model.Reserva;
 import com.example.SisAcademicoAlunos_19.model.Sala;
-import com.example.SisAcademicoAlunos_19.model.Status;
+import com.example.SisAcademicoAlunos_19.model.StatusReserva;
 import com.example.SisAcademicoAlunos_19.model.Usuario;
 import com.example.SisAcademicoAlunos_19.service.ReservaService;
 import jakarta.validation.Valid;
@@ -98,9 +98,12 @@ public class ReservaController {    // recebe requisicoes, expoe endpoints e cha
             reserva.setSala(sala);
         }
 
-        Status status = new Status();
-        status.setId(dto.statusId());
-        reserva.setStatus(status);
+        Long statusReservaId = dto.statusReservaId() != null ? dto.statusReservaId() : dto.statusId();
+        if (statusReservaId != null) {
+            StatusReserva statusReserva = new StatusReserva();
+            statusReserva.setId(statusReservaId);
+            reserva.setStatusReserva(statusReserva);
+        }
 
         return reserva;
     }
@@ -109,7 +112,7 @@ public class ReservaController {    // recebe requisicoes, expoe endpoints e cha
         Long laboratorioId = reserva.getLaboratorio() != null ? reserva.getLaboratorio().getId() : null;
         Long salaId = reserva.getSala() != null ? reserva.getSala().getId() : null;
         String nomeUsuario = reserva.getUsuario() != null ? reserva.getUsuario().getNome() : null;
-        String nomeStatus = reserva.getStatus() != null ? reserva.getStatus().getNome() : null;
+        String nomeStatus = reserva.getStatusReserva() != null ? reserva.getStatusReserva().getNome() : null;
 
         return new ReservaRespostaDTO(
                 reserva.getId(),
@@ -121,7 +124,7 @@ public class ReservaController {    // recebe requisicoes, expoe endpoints e cha
                 nomeUsuario,
                 laboratorioId,
                 salaId,
-                reserva.getStatus() != null ? reserva.getStatus().getId() : null,
+                reserva.getStatusReserva() != null ? reserva.getStatusReserva().getId() : null,
                 nomeStatus
         );
     }

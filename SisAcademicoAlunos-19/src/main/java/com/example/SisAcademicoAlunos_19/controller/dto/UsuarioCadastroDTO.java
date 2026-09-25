@@ -4,31 +4,34 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public record UsuarioCadastroDTO(       // é o formato que chega/sai da API, ajuda a não expor campos sensíveis como senha em retorno (se comunica com model)
-        @NotBlank(message = "CPF não pode estar em branco")
-        @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
+        @NotBlank(message = "Campo obrigatório")
+        @Pattern(regexp = "\\d{11}", message = "CPF inválido")
         String cpf,
 
-        @NotBlank(message = "Nome completo não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
+        @Size(min = 10, max = 80, message = "Quantidade de caracteres incorreta!")
         String nome,
 
-        @NotNull(message = "Data de aniversário é obrigatória")
+        @NotNull(message = "Campo obrigatório")
         LocalDate dataAniversario,
 
-        @NotBlank(message = "Celular não pode estar em branco")
-        @Pattern(regexp = "\\d{10,11}", message = "Celular deve conter 10 ou 11 dígitos")
+        @NotBlank(message = "Campo obrigatório")
+        @Pattern(regexp = "\\d{10,11}", message = "Celular inválido")
         String celular,
 
-        @NotBlank(message = "Email não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
+        @Size(min = 15, max = 80, message = "Quantidade de caracteres incorreta!")
         @Email(message = "Email inválido")
         String email,
 
-        @NotBlank(message = "Login não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
         String login,
 
-        @NotBlank(message = "Senha não pode estar em branco")
+        @NotBlank(message = "Campo obrigatório")
         String senha
 ) {}
